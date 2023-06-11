@@ -76,7 +76,7 @@ export function Crear() {
             </div>
             <div>
                 <label>Portada:</label>
-                <input type="file" onChange={handleChangeFile} name="portada" />
+                <input type="file" onChange={handleChange} name="portada" />
                 <div>
                     {!!portada ? <img alt="portada" width="200" src={portada}/>:""}
                 </div>
