@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useAppContext } from "../store/store";
+import { Link } from "react-router-dom";
+
 export function Crear() {
 
     const [titulo, setTitulo] = useState("");
@@ -7,6 +10,7 @@ export function Crear() {
     const [intro, setIntro] = useState("");
     const [comentarios, setComentarios] = useState("");
     const [completado, setCompletado] = useState(false);
+    const store = useAppContext();
 
     function handleChange(e) {
         const n = e.target.name;
@@ -51,7 +55,7 @@ export function Crear() {
         e.preventdefault();
         const libro={
             id:crypto.randomUUID(),
-            titulo:titulo,
+            titulo,
             autor,
             portada,
             intro,
@@ -60,41 +64,43 @@ export function Crear() {
         };
 
     //Crear un nuevo libro
+        store.crearItem(libro);
+
     }
 
     return (
+        <div>
+        <Link to="/">Home</Link>
         <form onSubmit={handleSubmit}>
             <div>
                 <label>Titulo:</label>
-                <input type="text" onChange={handleChange} value={titulo} name="titulo" />
-                {titulo}           
+                <input type="text" onChange={handleChange} value={titulo} name="titulo" />         
             </div>
             <div>
                 <label>Autor:</label>
                 <input type="text" onChange={handleChange} value={autor} name="autor" />
-                {autor}
             </div>
             <div>
                 <label>Portada:</label>
                 <input type="file" onChange={handleChange} name="portada" />
                 <div>
-                    {!!portada ? <img alt="portada" width="200" src={portada}/>:""}
+                   
                 </div>
             </div>
             <div>
                 <label>Introducción:</label>
                 <input type="text" onChange={handleChange} value={intro} name="intro" />
-                {intro}
             </div>
             <div>
                 <label>Comentarios:</label>
                 <input type="text" onChange={handleChange} value={comentarios} name="comentarios" />
-                {comentarios}
              </div>
             <div>
                 <label>Completado:</label>
                 <input type="checkbox" onChange={handleChange} value={completado} name="completado" />
             </div>
+                <input type="submit" value="Registrar Libro"/>
         </form>
+        </div>
     )
 }
